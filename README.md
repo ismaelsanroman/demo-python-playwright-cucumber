@@ -1,115 +1,130 @@
-Proyecto de Automatización con Python, Playwright y Behave
+# 🧪 Demo Automation Testing con Python, Playwright y Cucumber
 
-Este repositorio contiene un proyecto de automatización de pruebas (front y back) usando Python, Playwright y Behave (Cucumber en Python). También incluye prácticas de mocking de API, reportes con Allure, configuración en archivos YAML, uso de variables de entorno con .env y revisión de estilo con Flake8.
+## 📌 Descripción
+Este proyecto automatiza pruebas de interfaz de usuario (UI) utilizando **Python**, **Playwright** y **Behave** (BDD con Cucumber/Gherkin).  
+Se enfoca en la interacción con la página [DemoQA](https://demoqa.com/) y permite realizar pruebas E2E con trazas, capturas de pantalla y mocks de API.
 
-Estructura General del Proyecto
+---
 
-CURSO PYTHON-PLAYWRIGHT/
-├── configs/
-│   └── config.yaml
-├── driver/
-│   └── playwright_base.py
-├── features/
-│   ├── pages/
-│   │   ├── base_page.py
-│   │   ├── elements_page.py
-│   │   ├── textbox_page.py
-│   ├── steps/
-│   │   ├── elements_steps.py
-│   │   ├── environment.py
-│   ├── textbox.feature
-├── mocks/
-├── reports/
-│   ├── junit-results/
-│   ├── screenshots/
-│   ├── traces/
-├── resources/
-│   ├── testdata.yaml
-│   ├── users.yaml
-├── scripts/
-│   └── run_tests.sh
-├── utils/
-│   ├── error_dictionary.py
-│   ├── logger.py
-├── venv/
-├── .env
-├── behave.ini
-├── README.md
-└── requirements.txt
+## 🚀 Tecnologías utilizadas
 
-1. Requisitos
-Python 3.8+
-pip
-(Opcional) Java o Docker para ver reportes de Allure.
-(Opcional) Flake8 para análisis de código.
+🔹 **Python** (Lenguaje principal)  
+🔹 **Playwright** (Automatización del navegador)  
+🔹 **Behave** (Framework BDD estilo Cucumber)  
+🔹 **Flask** (Mock server para pruebas API)  
+🔹 **Allure** (Opcional para generación de reportes)  
+🔹 **Pre-commit** (Estilo de código: Black, isort, flake8)  
 
-2. Instalación
-Clona el repositorio:
-git clone <URL_DEL_REPOSITORIO>
-cd CURSO PYTHON-PLAYWRIGHT
+---
 
-Crea y activa un entorno virtual:
+## 📂 Estructura del proyecto
+
+📦 demo-python-playwright-cucumber ├── 📂 configs # Archivos de configuración │ └── config.yaml # Configuración personalizada ├── 📂 driver # Clases base para gestionar Playwright │ └── playwright_base.py ├── 📂 features # Pruebas BDD en Gherkin │ ├── 📂 pages # Page Object Model (POM) │ │ ├── base_page.py │ │ ├── elements_page.py │ │ └── textbox_page.py │ ├── 📂 steps # Implementación de los steps en Python │ │ ├── environment.py # Configuración global de Behave │ │ ├── textbox_steps.py │ ├── textbox.feature # Escenarios de prueba en Gherkin ├── 📂 mocks # Servidor Flask para pruebas API │ └── mock_server.py ├── 📂 reports # Reportes de ejecución y capturas │ ├── junit-results/ │ ├── screenshots/ │ ├── traces/ ├── 📂 resources # Datos de prueba en YAML │ ├── testdata.yaml │ ├── users.yaml ├── 📂 scripts # Scripts auxiliares │ └── run_tests.sh # Script para ejecutar pruebas ├── 📂 utils # Utilidades (logs, manejo de errores) │ ├── error_dictionary.py │ ├── logger.py ├── .env # Variables de entorno ├── .flake8 # Configuración de Flake8 ├── .gitignore # Archivos ignorados en Git ├── .pre-commit-config.yaml # Configuración de pre-commit ├── behave.ini # Configuración de Behave ├── LICENSE # Licencia del proyecto ├── pyproject.toml # Configuración de formateo de código ├── README.md # 📖 Documentación del proyecto └── requirements.txt # 📦 Dependencias del proyecto
+
+yaml
+Copiar
+Editar
+
+---
+
+## ⚙️ Instalación
+
+### 🔹 1. Clonar el repositorio
+```sh
+git clone https://github.com/tu-usuario/demo-python-playwright-cucumber.git
+cd demo-python-playwright-cucumber
+🔹 2. Crear un entorno virtual
+sh
+Copiar
+Editar
 python -m venv venv
-source venv/bin/activate  # macOS/Linux
-.\venv\Scripts\activate  # Windows
-Instala dependencias:
+Activar el entorno:
+
+Windows:
+sh
+Copiar
+Editar
+venv\Scripts\activate
+Mac/Linux:
+sh
+Copiar
+Editar
+source venv/bin/activate
+🔹 3. Instalar dependencias
+sh
+Copiar
+Editar
 pip install -r requirements.txt
-Instala los navegadores de Playwright:
-playwright install
+🔹 4. Instalar los hooks de pre-commit (opcional pero recomendado)
+sh
+Copiar
+Editar
+pre-commit install
+Esto asegurará que Black, isort y flake8 se ejecuten antes de cada commit.
 
-3. Variables de Entorno y Configuración
-Ejemplo de .env:
-BASE_URL=https://demoqa.com
-HEADLESS=True
-BROWSER_TYPE=chromium
-
-Ajusta config.yaml según el entorno que uses.
-
-4. Cómo Ejecutar las Pruebas
-4.1 Pruebas con Behave
-Para ejecutar todas las pruebas BDD:
+🏃‍♂️ Ejecución de las pruebas
+🔹 1. Ejecutar los tests con Behave
+sh
+Copiar
+Editar
 behave
-O bien, puedes usar tags para separar escenarios:
-behave --tags=@front
-behave --tags=@back
+Si deseas generar reportes JUnit o Allure, ajusta los formatos y rutas de salida, por ejemplo:
 
-4.2 Generar Reporte Allure
-behave \
-  --format allure_behave.formatter:AllureFormatter \
-  --alluredir=reports/allure-results
-
-Luego generas y abres el reporte:
+sh
+Copiar
+Editar
+behave -f allure_behave.formatter:AllureFormatter -o reports/allure-results
+🔹 2. (Opcional) Generar reporte de Allure
+sh
+Copiar
+Editar
 allure generate reports/allure-results -o reports/allure-report --clean
 allure open reports/allure-report
+Asegúrate de instalar Allure CLI si no lo tienes.
 
-4.3 Ejecución con Script
-chmod +x scripts/run_tests.sh
-./scripts/run_tests.sh
+🔹 3. (Opcional) Ejecutar el mock server
+Si necesitas probar el consumo de un endpoint simulado:
 
-5. Mock Server (Pruebas de API)
-Inicia el mock server:
+sh
+Copiar
+Editar
 python mocks/mock_server.py
-Ejecuta pruebas relacionadas:
-behave --tags=@back
+El servidor se iniciará en http://localhost:5000/mock-endpoint.
 
-6. Revisión de Estilo
-Ejecuta Flake8 para comprobar la calidad del código:
-flake8 .
+📝 Ejemplo de Escenario BDD
+Archivo: features/textbox.feature
 
-7. Diseño y Principios
-Page Object Model (POM) para modularización.
-BDD con Cucumber para escenarios de prueba.
-Logs detallados en cada interacción.
-Diccionario de errores en utils/error_dictionary.py.
+gherkin
+Copiar
+Editar
+Feature: Formulario de TextBox en DemoQA
 
-8. Futuras Mejoras
-Ejecución paralela con behave-parallel o pytest-xdist.
-CI/CD con GitHub Actions o Jenkins.
-Pruebas de rendimiento con Locust o JMeter.
+  Scenario: Rellenar y verificar formulario
+    Given I navigate to DemoQA and "Elements" Page
+    When I open the "Text Box" section
+    Then I fill in the form with the following data
+      | name  | email               | current_address   | permanent_address   |
+      | John  | john@example.com    | Main Street, 123  | Second Street, 456  |
+    Then I verify the form with the following data
+      | name  | email               | current_address   | permanent_address   |
+      | John  | john@example.com    | Main Street, 123  | Second Street, 456  |
+💡 Notas adicionales
+Variables de entorno:
 
-9. Contribuciones
-Pull Requests bienvenidos.
-Issues para reportar errores o solicitar mejoras.
+Puedes definir valores en el archivo .env (por ej. BASE_URL) y cargarlos desde los steps (environment.py).
+Control de Errores:
 
-10. Licencia
-Especifica la licencia si aplica (ej. MIT License).
+El archivo utils/error_dictionary.py permite acumular errores sin detener la ejecución completa.
+Revisiones de código (pre-commit):
+
+Se configuran hooks que ejecutan Black, isort y flake8 para forzar un estilo uniforme y detección temprana de errores.
+Requerimientos adicionales:
+
+Asegúrate de tener Node.js instalado si usas ciertas funciones avanzadas de Playwright (puede requerirlo para drivers).
+📃 Licencia
+Este proyecto se distribuye bajo la licencia MIT. Puedes usarlo y adaptarlo libremente.
+
+📧 Contacto:
+📧 Email
+🤖 GitHub
+
