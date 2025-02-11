@@ -1,0 +1,14 @@
+default:
+  base_url: "https://demoqa.com"
+  headless: true
+  browser_type: "chromium"
+
+staging:
+  base_url: "https://demoqa.com"
+  headless: true
+  browser_type: "chromium"
+
+dev:
+  base_url: "https://demoqa.com"
+  headless: false
+  browser_type: "firefox"
