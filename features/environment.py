@@ -1,19 +1,23 @@
 # features/environment.py
-import os
 import asyncio
-from pathlib import Path
+import os
 from datetime import datetime
+from pathlib import Path
+
 from dotenv import load_dotenv
 from playwright.async_api import async_playwright
+
 from utils.error_dictionary import ErrorDictionary
 
 # Funciones asíncronas para tracing y capturas de pantalla
+
 
 async def start_tracing(context):
     """
     Inicia el tracing en el contexto de Playwright.
     """
     await context.tracing.start(screenshots=True, snapshots=True, sources=True)
+
 
 async def stop_tracing(context):
     """
@@ -26,6 +30,7 @@ async def stop_tracing(context):
     trace_path = trace_dir / f"trace_{timestamp}.zip"
 
     await context.tracing.stop(path=str(trace_path))
+
 
 async def take_screenshot(page, scenario_name):
     """
@@ -52,14 +57,14 @@ def before_all(context):
     - Crea el browser_context y la page que usarán los escenarios.
     """
     load_dotenv()
-    
+
     context.config.userdata = {
         "base_url": os.getenv("BASE_URL"),
         "api_url": os.getenv("API_URL"),
         "headless": os.getenv("HEADLESS"),
         "browser_type": os.getenv("BROWSER_TYPE"),
     }
-    
+
     context.errors = ErrorDictionary()
     context.config.setup_logging()
 
@@ -72,11 +77,15 @@ def before_all(context):
 
     # Lanzar el browser (por ejemplo, chromium en modo no headless)
     context.browser = context.loop.run_until_complete(
-        context.playwright.chromium.launch(headless=False, args=["--start-maximized"], slow_mo=500)
+        context.playwright.chromium.launch(
+            headless=False, args=["--start-maximized"], slow_mo=500
+        )
     )
 
     # Crear un contexto de navegador y una página principal
-    context.browser_context = context.loop.run_until_complete(context.browser.new_context())
+    context.browser_context = context.loop.run_until_complete(
+        context.browser.new_context()
+    )
     context.page = context.loop.run_until_complete(context.browser_context.new_page())
 
 

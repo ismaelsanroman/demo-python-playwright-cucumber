@@ -1,5 +1,6 @@
 # driver/playwright_base.py
 import asyncio
+
 from playwright.sync_api import sync_playwright
 
 
@@ -14,7 +15,9 @@ class PlaywrightBase:
         if not cls._playwright:
             cls._playwright = sync_playwright().start()
         browser_launcher = getattr(cls._playwright, browser_type)
-        cls._browser = browser_launcher.launch(headless=headless, args=["--start-maximized"])
+        cls._browser = browser_launcher.launch(
+            headless=headless, args=["--start-maximized"]
+        )
         cls._context = cls._browser.new_context()
         cls._page = cls._context.new_page()
         return cls._page

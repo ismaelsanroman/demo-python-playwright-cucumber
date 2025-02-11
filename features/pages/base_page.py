@@ -1,11 +1,13 @@
 # features/pages/base_page.py
 from utils.logger import Logger
 
+
 class BasePage:
     """
     Esta clase base requiere una `page` asíncrona de Playwright
     para ejecutar sus métodos.
     """
+
     def __init__(self, page):
         self.logger = Logger().get_logger()
         self.page = page  # page asíncrona
@@ -19,7 +21,7 @@ class BasePage:
         await self.page.locator(locator).scroll_into_view_if_needed()
         await self.page.locator(locator).focus()
         await self.page.click(locator)
-        
+
     async def fill_element(self, locator: str, text: str):
         self.logger.info(f"⌨️ Filling element {locator} with text: {text}")
         await self.page.fill(locator, text)
@@ -40,5 +42,7 @@ class BasePage:
             self.logger.info(f"✅ Elemento encontrado: {selector}")
             return element
         except Exception as e:
-            self.logger.error(f"❌ No se pudo encontrar el elemento {selector} dentro del tiempo de espera: {e}")
+            self.logger.error(
+                f"❌ No se pudo encontrar el elemento {selector} dentro del tiempo de espera: {e}"
+            )
             return None

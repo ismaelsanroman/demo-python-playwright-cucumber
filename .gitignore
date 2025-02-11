@@ -1,3 +1,6 @@
+# Archivos de configuración específicos del entorno
+.env
+
 # Ignorar el entorno virtual
 venv/
 venv/*
@@ -28,6 +31,15 @@ __pycache__/
 *.dylib
 *.pyd
 
+# Carpetas de reportes que no queremos analizar
+reports/
+pruebas/
+
 # Ignorar directorio específico de utils
 utils/
 utils/__pycache__/
+
+# Configuración de herramientas
+.mypy_cache/
+.flake8
+.pytest_cache/
