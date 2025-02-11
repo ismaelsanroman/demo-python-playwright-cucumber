@@ -1,0 +1,71 @@
+name: Lint Checks
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  push:
+    branches: [ "main" ]
+
+jobs:
+  black-format-check:
+    name: "Black Format Check 🚀"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v3
+
+      - name: "Set up Python"
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: "Install dependencies"
+        run: |
+          pip install black
+
+      - name: "Run Black in check mode"
+        run: |
+          echo "📝 Running Black..."
+          black --check .
+
+  isort-check:
+    name: "isort Check 🔍"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v3
+
+      - name: "Set up Python"
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: "Install dependencies"
+        run: |
+          pip install isort
+
+      - name: "Run isort in check mode"
+        run: |
+          echo "⚙️ Checking import order with isort..."
+          isort --check-only --diff .
+
+  flake8-check:
+    name: "Flake8 Lint Check 🌍"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v3
+
+      - name: "Set up Python"
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: "Install dependencies"
+        run: |
+          pip install flake8 flake8-docstrings flake8-bugbear flake8-isort
+
+      - name: "Run Flake8"
+        run: |
+          echo "🔍 Running Flake8..."
+          flake8 .

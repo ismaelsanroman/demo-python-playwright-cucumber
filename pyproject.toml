@@ -1,0 +1,19 @@
+[tool.black]
+line-length = 88
+exclude = '''
+/(
+    venv
+  | pruebas
+  | reports
+  | \.git
+  | \.mypy_cache
+  | __pycache__
+  )/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+skip = ["venv", "pruebas", "reports", "__pycache__"]

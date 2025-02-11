@@ -1,0 +1,10 @@
+[flake8]
+exclude = 
+    venv,
+    pruebas,
+    reports,
+    .git,
+    __pycache__
+max-line-length = 88
+select = C,E,F,W,B,B950,D
+docstring-convention = google

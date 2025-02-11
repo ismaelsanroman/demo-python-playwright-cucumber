@@ -1,0 +1,29 @@
+# Ignorar el entorno virtual
+venv/
+venv/*
+
+# Ignorar archivos de caché de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignorar registros y archivos de dependencias
+*.log
+*.pid
+*.lock
+*.csv
+*.json
+
+# Ignorar archivos de configuración de paquetes
+*.dist-info/
+*.egg-info/
+
+# Ignorar dependencias compiladas y temporales
+*.so
+*.dll
+*.dylib
+*.pyd
+
+# Ignorar directorio específico de utils
+utils/
+utils/__pycache__/

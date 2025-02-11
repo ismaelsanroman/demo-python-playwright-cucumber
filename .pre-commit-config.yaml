@@ -1,0 +1,27 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 23.1.0  # Usa la versión más reciente disponible
+    hooks:
+      - id: black
+        name: "Black (Auto-Format)"
+        language_version: python3
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0  # Última versión estable
+    hooks:
+      - id: isort
+        name: "isort (Auto-Order Imports)"
+        language_version: python3
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        name: "Flake8 (Lint)"
+        language_version: python3
+        additional_dependencies:
+          - flake8-docstrings
+          - flake8-bugbear
+          - flake8-isort
+        additional_args:
+          - --config=.flake8
