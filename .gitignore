@@ -1,6 +1,10 @@
 # Ignorar el entorno virtual
 venv/
 venv/*
+venv/Lib/*
+venv/Lib/site-packages/*
+venv/Lib/site-packages/_distutils_hack/*
+venv/Lib/site-packages/_distutils_hack/__pycache__/*
 
 # Ignorar archivos de caché de Python
 __pycache__/
