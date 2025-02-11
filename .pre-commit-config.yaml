@@ -1,18 +1,44 @@
+# -----------------------------------------------------------------------------
+# Módulo de configuración de pre-commit.
+#
+# Define los hooks necesarios para asegurar la calidad del código antes de
+# realizar un commit, con:
+#   - Black para auto-formateo.
+#   - isort para ordenar imports.
+#   - flake8 para linting, con plugin de docstrings y otras extensiones.
+# -----------------------------------------------------------------------------
+
 repos:
+  # ---------------------------------------------------------------------------
+  # Repositorio oficial de Black.
+  # Black es un formateador de código que aplica un estilo consistente.
+  # ---------------------------------------------------------------------------
   - repo: https://github.com/psf/black
-    rev: 23.1.0  # Usa la versión más reciente disponible
+    # Versión fija para reproducibilidad. Ajusta si deseas una versión más reciente.
+    rev: 23.1.0
     hooks:
       - id: black
         name: "Black (Auto-Format)"
         language_version: python3
 
+  # ---------------------------------------------------------------------------
+  # Repositorio oficial de isort.
+  # isort organiza y ordena las importaciones en Python de forma coherente.
+  # ---------------------------------------------------------------------------
   - repo: https://github.com/pycqa/isort
-    rev: 5.12.0  # Última versión estable
+    rev: 5.12.0
     hooks:
       - id: isort
         name: "isort (Auto-Order Imports)"
         language_version: python3
 
+  # ---------------------------------------------------------------------------
+  # Repositorio oficial de flake8.
+  # Se extiende con docstrings, bugbear e isort para:
+  #   - Validar docstrings de acuerdo con PEP257 (flake8-docstrings).
+  #   - Detectar problemas típicos de calidad/código (flake8-bugbear).
+  #   - Verificar el orden de imports (flake8-isort).
+  # ---------------------------------------------------------------------------
   - repo: https://github.com/pycqa/flake8
     rev: 6.0.0
     hooks:
@@ -23,5 +49,5 @@ repos:
           - flake8-docstrings
           - flake8-bugbear
           - flake8-isort
-        additional_args:
+        args:
           - --config=.flake8
