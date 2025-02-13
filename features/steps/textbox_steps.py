@@ -1,9 +1,7 @@
 # features/steps/textbox_steps.py
 """Módulo que define los steps para la funcionalidad de TextBox en BDD."""
 
-from behave import given, then, when
-from pages.base_page import BasePage
-from pages.elements_page import ElementsPage
+from behave import step
 from pages.textbox_page import TextBoxPage
 
 from utils.error_dictionary import ErrorDictionary
@@ -11,35 +9,7 @@ from utils.error_dictionary import ErrorDictionary
 errors = ErrorDictionary()
 
 
-@given('I navigate to DemoQA and "{element}" Page')
-def step_navigate_to_elements(context, element: str):
-    """Navega a la página base de DemoQA y hace clic en el elemento especificado.
-
-    Args:
-        context (behave.runner.Context): Contexto de Behave con la config.
-        element (str): Nombre del elemento a seleccionar, ej. 'Elements'.
-    """
-    base_url = context.config.userdata.get("base_url")
-    base_page = BasePage(context.page)
-    context.loop.run_until_complete(base_page.navigate(base_url))
-    context.loop.run_until_complete(
-        base_page.click_element(f"//h5[contains(.,'{element}')]")
-    )
-
-
-@when('I open the "{section}" section')
-def step_open_text_box(context, section: str):
-    """Abre la sección específica dentro de la página de elementos.
-
-    Args:
-        context (behave.runner.Context): Contexto de Behave.
-        section (str): Nombre de la sección a abrir, ej. 'Text Box'.
-    """
-    elements_page = ElementsPage(context.page)
-    context.loop.run_until_complete(elements_page.open_section_form(section))
-
-
-@then("I fill in the form with the following data")
+@step("I fill in the form with the following data")
 def fill_in_and_send_form(context):
     """Completa y envía el formulario con la información proporcionada en la tabla.
 
@@ -63,7 +33,7 @@ def fill_in_and_send_form(context):
     context.loop.run_until_complete(textbox_page.submit_form())
 
 
-@then("I verify the form with the following data")
+@step("I verify the form with the following data")
 def verify_submitted_form(context):
     """Verifica que el formulario enviado muestre los datos indicados en la tabla.
 
@@ -86,7 +56,7 @@ def verify_submitted_form(context):
     )
 
 
-@then("I verify the form fails")
+@step("I verify the form fails")
 def verify_submitted_form_fail(context):
     """Verifica que el formulario muestre un error por email inválido.
 

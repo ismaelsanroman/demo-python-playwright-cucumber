@@ -23,10 +23,15 @@ class BasePage:
 
     async def click_element(self, locator: str):
         """Hace clic en un elemento identificado por el `locator`."""
-        self.logger.info(f"🖱  Clicking on element: {locator}")
+        self.logger.info(f"🖱️  Clicking on element: {locator}")
         await self.page.locator(locator).scroll_into_view_if_needed()
         await self.page.locator(locator).focus()
         await self.page.click(locator)
+
+    async def click_button(self, locator: str):
+        """Hace clic en un botón identificado por el `locator`."""
+        self.logger.info(f"🖱️  Clicking button: {locator}")
+        await self.page.get_by_role("button", name=locator).click()
 
     async def fill_element(self, locator: str, text: str):
         """Rellena campo de entrada identificado por `locator` con el texto `text`."""
@@ -68,3 +73,13 @@ class BasePage:
                 e,
             )
             return None
+
+    async def scroll_page(self, pixeles: str):
+        """Realizamos scroll de X pixeles en una página."""
+        self.logger.info(f"📜 Scrolling page {pixeles} píxeles")
+        await self.page.evaluate(f"window.scrollBy(0, {pixeles})")
+
+    async def scroll_final_page(self):
+        """Realizamos scroll al final de la página."""
+        self.logger.info("📜 Scrolling final page")
+        await self.page.evaluate("window.scrollTo(0, document.body.scrollHeight)")

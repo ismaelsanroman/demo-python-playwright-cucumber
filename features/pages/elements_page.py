@@ -10,21 +10,12 @@ class ElementsPage(BasePage):
     Proporciona métodos para interactuar con sus secciones específicas.
     """
 
-    # Locators
-    textBox_button = "text=Text Box"
-    checkBox_button = "text=Radio Button"
-    radioButton_button = "text=Web Tables"
-    webTables_button = "text=Web Tables"
-    buttons_button = "text=Buttons"
-    links_button = "text=Links"
-    brokenLinksImages_button = "text=Broken Links - Images"
-    uploadAndDownload_button = "text=Upload and Download"
-    dynamicProperties_button = "text=Dynamic Properties"
-
-    async def open_section_form(self, section):
+    async def open_section_form(self, section: str):
         """Abre una sección específica de la página de elementos.
 
         Args:
             section (str): Nombre de la sección a abrir.
         """
+        self.logger.info(f"📂 Abriendo la sección: {section}")
         await self.click_element(f"text={section}")
+        self.logger.info(f"✅ Sección '{section}' abierta correctamente.")
