@@ -20,6 +20,7 @@ class BasePage:
         """Navega a la URL especificada."""
         self.logger.info(f"🌐 Navigating to: {url}")
         await self.page.goto(url)
+        await self.page.wait_for_load_state("networkidle")
 
     async def click_element(self, locator: str):
         """Hace clic en un elemento identificado por el `locator`."""
@@ -83,3 +84,8 @@ class BasePage:
         """Realizamos scroll al final de la página."""
         self.logger.info("📜 Scrolling final page")
         await self.page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+
+    async def refresh_page(self):
+        """Recarga la página actual."""
+        self.logger.info("🔄 Refrescando la página...")
+        await self.page.reload()

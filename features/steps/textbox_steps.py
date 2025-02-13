@@ -2,11 +2,8 @@
 """Módulo que define los steps para la funcionalidad de TextBox en BDD."""
 
 from behave import step
-from pages.textbox_page import TextBoxPage
 
-from utils.error_dictionary import ErrorDictionary
-
-errors = ErrorDictionary()
+from features.pages.textbox_page import TextBoxPage
 
 
 @step("I fill in the form with the following data")
@@ -17,7 +14,7 @@ def fill_in_and_send_form(context):
         context (behave.runner.Context): Contexto de Behave con una data table
             que incluye name, email, current_address y permanent_address.
     """
-    textbox_page = TextBoxPage(context.page)
+    page = TextBoxPage(context.page)
     data_table = [row.as_dict() for row in context.table]
     for row in data_table:
         name = row["name"]
@@ -26,11 +23,9 @@ def fill_in_and_send_form(context):
         permanent_address = row["permanent_address"]
 
     context.loop.run_until_complete(
-        textbox_page.fill_and_verify_form(
-            name, email, current_address, permanent_address
-        )
+        page.fill_and_verify_form(name, email, current_address, permanent_address)
     )
-    context.loop.run_until_complete(textbox_page.submit_form())
+    context.loop.run_until_complete(page.submit_form())
 
 
 @step("I verify the form with the following data")
@@ -41,7 +36,7 @@ def verify_submitted_form(context):
         context (behave.runner.Context): Contexto de Behave con la data table
             para comparar los datos del formulario.
     """
-    textbox_page = TextBoxPage(context.page)
+    page = TextBoxPage(context.page)
     data_table = [row.as_dict() for row in context.table]
     for row in data_table:
         name = row["name"]
@@ -50,9 +45,7 @@ def verify_submitted_form(context):
         permanent_address = row["permanent_address"]
 
     context.loop.run_until_complete(
-        textbox_page.verify_submitted_data(
-            name, email, current_address, permanent_address
-        )
+        page.verify_submitted_data(name, email, current_address, permanent_address)
     )
 
 
@@ -63,5 +56,5 @@ def verify_submitted_form_fail(context):
     Args:
         context (behave.runner.Context): Contexto de Behave.
     """
-    textbox_page = TextBoxPage(context.page)
-    context.loop.run_until_complete(textbox_page.error_email_submitted_data())
+    page = TextBoxPage(context.page)
+    context.loop.run_until_complete(page.error_email_submitted_data())

@@ -37,3 +37,10 @@ def step_open_text_box(context, section: str):
     """
     elements_page = ElementsPage(context.page)
     context.loop.run_until_complete(elements_page.open_section_form(section))
+
+
+@step("I refresh the page")
+def refresh_page(context):
+    """Refresca la página."""
+    base_page = BasePage(context.page)
+    context.loop.run_until_complete(base_page.refresh_page())
