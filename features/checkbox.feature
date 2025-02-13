@@ -2,10 +2,12 @@ Feature: Tests in the 'Check Box' sub-section of 'Elements'
   Set of tests on the 'Check Box' sub-section
   to check the stability and correctness of that section.
 
-  @checkbox @smoke @happy
-  Scenario: Select a single file
+  Background:
     Given I navigate to DemoQA and "Elements" Page
     When I open the "Check Box" section
+
+  @checkbox @smoke @happy
+  Scenario: Select a single file
     And I select the checkbox for "Notes"
     Then I verify that labels are selected
       | label |
@@ -13,8 +15,6 @@ Feature: Tests in the 'Check Box' sub-section of 'Elements'
 
   @checkbox @boundary @unhappy
   Scenario: Select and deselect a single file
-    Given I navigate to DemoQA and "Elements" Page
-    When I open the "Check Box" section
     And I select the checkbox for "Commands"
     And I verify that labels are selected
       | label    |
@@ -26,8 +26,6 @@ Feature: Tests in the 'Check Box' sub-section of 'Elements'
 
   @checkbox @boundary @happy
   Scenario: Select a parent folder and check all children are selected
-    Given I navigate to DemoQA and "Elements" Page
-    When I open the "Check Box" section
     And I select the checkbox for "Desktop"
     Then I verify that labels are selected
       | label    |
