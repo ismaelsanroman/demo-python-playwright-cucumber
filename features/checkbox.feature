@@ -75,7 +75,7 @@ Feature: Tests in the 'Check Box' sub-section of 'Elements'
       | label  |
       | Public |
 
-  @checkbox @caminos_logicos @regression @Test
+  @checkbox @caminos_logicos @regression
   Scenario: Validate the selection persistence
     And I select the checkbox for "Downloads"
     And I refresh the page
