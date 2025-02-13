@@ -23,7 +23,7 @@ def step_navigate_to_elements(context, element: str):
     context.loop.run_until_complete(base_page.navigate(base_url))
     context.loop.run_until_complete(base_page.scroll_page(500))
     context.loop.run_until_complete(
-        base_page.click_element(f"//h5[contains(., '{element}')]")
+        base_page.click_element(f"//h5[contains(.,'{element}')]")  # noqa: E231
     )
 
 
