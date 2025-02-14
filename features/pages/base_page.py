@@ -1,7 +1,10 @@
 # features/pages/base_page.py
 """Módulo que contiene la clase base `BasePage` para interacción con Playwright."""
 
+from utils.error_dictionary import ErrorDictionary
 from utils.logger import Logger
+
+errors = ErrorDictionary()
 
 
 class BasePage:
@@ -89,3 +92,13 @@ class BasePage:
         """Recarga la página actual."""
         self.logger.info("🔄 Refrescando la página...")
         await self.page.reload()
+
+    async def open_section_form(self, section: str):
+        """Abre una sección específica de la página de elementos.
+
+        Args:
+            section (str): Nombre de la sección a abrir.
+        """
+        self.logger.info(f"📂 Abriendo la sección: {section}")
+        await self.click_element(f"text={section}")
+        self.logger.info(f"✅ Sección '{section}' abierta correctamente.")

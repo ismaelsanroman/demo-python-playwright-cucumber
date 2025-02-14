@@ -3,11 +3,6 @@
 
 from behave import step
 from pages.base_page import BasePage
-from pages.elements_page import ElementsPage
-
-from utils.error_dictionary import ErrorDictionary
-
-errors = ErrorDictionary()
 
 
 @step('I navigate to DemoQA and "{element}" Page')
@@ -35,8 +30,8 @@ def step_open_text_box(context, section: str):
         context (behave.runner.Context): Contexto de Behave.
         section (str): Nombre de la sección a abrir, ej. 'Text Box'.
     """
-    elements_page = ElementsPage(context.page)
-    context.loop.run_until_complete(elements_page.open_section_form(section))
+    base_page = BasePage(context.page)
+    context.loop.run_until_complete(base_page.open_section_form(section))
 
 
 @step("I refresh the page")
