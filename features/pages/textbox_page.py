@@ -71,20 +71,20 @@ class TextBoxPage(BasePage):
         address_text = await self.get_text(self.current_address_request)
         permanent_address_text = await self.get_text(self.permanent_address_request)
 
-        assert expected_name[:25] in f"Name:{name_text}", ( # noqa
+        assert expected_name[:25] in f"Name:{name_text}", (  # noqa
             f"❌ Nombre incorrecto: esperado '{expected_name}', "
             f"obtenido '{name_text}'"
         )
-        assert expected_email in f"Email:{email_text}", ( # noqa
+        assert expected_email in f"Email:{email_text}", (  # noqa
             f"❌ Email incorrecto: esperado '{expected_email}', "
             f"obtenido '{email_text}'"
         )
-        assert expected_address in f"Current Address :{address_text}", ( # noqa
+        assert expected_address in f"Current Address :{address_text}", (  # noqa
             f"❌ Dirección incorrecta: esperado '{expected_address}', "
             f"obtenido '{address_text}'"
         )
         assert expected_permanent_address in (
-            f"Permananet Address :{permanent_address_text}" # noqa
+            f"Permananet Address :{permanent_address_text}"  # noqa
         ), (
             f"❌ Dirección permanente incorrecta: esperado "
             f"'{expected_permanent_address}', obtenido "
