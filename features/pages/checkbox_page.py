@@ -3,7 +3,11 @@
 
 import re
 
+from utils.error_dictionary import ErrorDictionary
+
 from .base_page import BasePage
+
+errors = ErrorDictionary()
 
 
 class CheckBoxPage(BasePage):
