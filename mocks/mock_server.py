@@ -6,7 +6,7 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-MOCK_FILE = "mocks/mock_data.yaml"  # Ruta del archivo YAML
+MOCK_FILE = "resources/mock_data.yaml"  # Ruta del archivo YAML
 
 
 # ------------------------------
