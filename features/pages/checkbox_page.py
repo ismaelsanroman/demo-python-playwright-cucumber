@@ -166,8 +166,3 @@ class CheckBoxPage(BasePage):
             msg = f"🪲 ERROR: '{section} no es un desplegable válido."
             self.logger.error(msg)
             raise ValueError(msg)
-
-        """
-        page.get_by_role("listitem").filter(has_text=re.compile(r"^Documents$")).get_by_label("Toggle").click()
-        page.get_by_role("listitem").filter(has_text=re.compile(r"^Office$")).get_by_label("Toggle").click()
-        """
