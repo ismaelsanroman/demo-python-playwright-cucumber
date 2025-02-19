@@ -1,0 +1,145 @@
+items:
+- available: true
+  category: Electrónica
+  description: Portátil con procesador Intel i7, 16GB RAM y tarjeta gráfica RTX 3060.
+  id: 1
+  name: Laptop Gamer
+  price: 1299.99
+  stock: 10
+- available: true
+  category: Telefonía
+  description: Teléfono de alta gama con pantalla OLED de 6.5 pulgadas y 128GB de
+    almacenamiento.
+  id: 2
+  name: Smartphone Pro
+  price: 899.99
+  stock: 25
+- available: true
+  category: Electrónica
+  description: Monitor de 27 pulgadas con resolución 4K y tasa de refresco de 144Hz.
+  id: 3
+  name: Monitor 4K
+  price: 499.99
+  stock: 8
+- available: true
+  category: Audio
+  description: Auriculares inalámbricos con cancelación de ruido y 30 horas de autonomía.
+  id: 4
+  name: Auriculares Bluetooth
+  price: 199.99
+  stock: 15
+- available: true
+  category: Periféricos
+  description: Teclado con switches mecánicos rojos y retroiluminación RGB programable.
+  id: 5
+  name: Teclado Mecánico RGB
+  price: 129.99
+  stock: 20
+- available: true
+  category: Muebles
+  description: Silla ergonómica con soporte lumbar, reposabrazos ajustables y material
+    transpirable.
+  id: 6
+  name: Silla Gamer
+  price: 299.99
+  stock: 5
+- available: true
+  category: Accesorios
+  description: Mochila impermeable con compartimentos ocultos y puerto de carga USB.
+  id: 7
+  name: Mochila Antirrobo
+  price: 59.99
+  stock: 30
+- available: true
+  category: Wearables
+  description: Smartwatch con monitoreo de ritmo cardíaco, GPS y resistencia al agua.
+  id: 8
+  name: Reloj Inteligente
+  price: 179.99
+  stock: 12
+- available: true
+  category: Seguridad
+  description: Cámara de vigilancia con detección de movimiento y visión nocturna.
+  id: 9
+  name: Cámara de Seguridad WiFi
+  price: 89.99
+  stock: 18
+- available: true
+  category: Redes
+  description: Router de última generación con WiFi 6 y 4 antenas de alto rendimiento.
+  id: 10
+  name: Router WiFi 6
+  price: 149.99
+  stock: 10
+- available: true
+  category: Hogar
+  description: Aspiradora inteligente con mapeo láser y compatibilidad con Alexa.
+  id: 11
+  name: Aspiradora Robot
+  price: 349.99
+  stock: 7
+- available: true
+  category: Electrodomésticos
+  description: Microondas con control por voz y múltiples programas de cocción.
+  id: 12
+  name: Microondas Inteligente
+  price: 199.99
+  stock: 9
+- available: true
+  category: Iluminación
+  description: Lámpara inteligente con control de color y sincronización con música.
+  id: 13
+  name: Lámpara LED RGB
+  price: 39.99
+  stock: 40
+- available: true
+  category: Herramientas
+  description: Juego de 24 piezas de destornilladores magnéticos para reparación de
+    dispositivos electrónicos.
+  id: 14
+  name: Set de Destornilladores
+  price: 24.99
+  stock: 50
+- available: true
+  category: Accesorios
+  description: Cargador de 65W compatible con laptops y teléfonos con USB-C.
+  id: 15
+  name: Cargador Rápido USB-C
+  price: 29.99
+  stock: 22
+- available: true
+  category: Gaming
+  description: Casco de realidad virtual con 6DOF y soporte para juegos VR.
+  id: 16
+  name: Gafas de Realidad Virtual
+  price: 399.99
+  stock: 6
+- available: true
+  category: Energía
+  description: Power bank de carga rápida con puertos USB-C y QC 3.0.
+  id: 17
+  name: Batería Externa 20000mAh
+  price: 49.99
+  stock: 35
+- available: true
+  category: Fotografía
+  description: Cámara de acción con estabilización óptica y grabación en 4K.
+  id: 18
+  name: Cámara Deportiva 4K
+  price: 159.99
+  stock: 14
+- available: true
+  category: Climatización
+  description: Dispositivo para medir temperatura, humedad y calidad del aire en tiempo
+    real.
+  id: 19
+  name: Estación Meteorológica Inteligente
+  price: 79.99
+  stock: 11
+- available: true
+  category: Energía
+  description: Panel solar de 100W con puerto USB y salida de 12V para camping y emergencias.
+  id: 20
+  name: Panel Solar Portátil
+  price: 199.99
+  stock: 8
