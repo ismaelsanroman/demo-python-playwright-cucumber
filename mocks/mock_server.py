@@ -15,7 +15,7 @@ app.config["SWAGGER"] = {
 }
 swagger = Swagger(app)
 
-MOCK_FILE = "mocks/mock_data.yaml"  # Ruta del archivo YAML
+MOCK_FILE = "resources/mock_data.yaml"
 
 
 def load_mock_data():
