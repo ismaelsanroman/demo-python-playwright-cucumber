@@ -1,0 +1,161 @@
+# mocks/mock_data.yaml
+items:
+  - id: 1
+    name: "Laptop Gamer"
+    description: "Portátil con procesador Intel i7, 16GB RAM y tarjeta gráfica RTX 3060."
+    category: "Electrónica"
+    price: 1499.99
+    stock: 10
+    available: true
+
+  - id: 2
+    name: "Smartphone Pro"
+    description: "Teléfono de alta gama con pantalla OLED de 6.5 pulgadas y 128GB de almacenamiento."
+    category: "Telefonía"
+    price: 899.99
+    stock: 25
+    available: true
+
+  - id: 3
+    name: "Monitor 4K"
+    description: "Monitor de 27 pulgadas con resolución 4K y tasa de refresco de 144Hz."
+    category: "Electrónica"
+    price: 499.99
+    stock: 8
+    available: true
+
+  - id: 4
+    name: "Auriculares Bluetooth"
+    description: "Auriculares inalámbricos con cancelación de ruido y 30 horas de autonomía."
+    category: "Audio"
+    price: 199.99
+    stock: 15
+    available: true
+
+  - id: 5
+    name: "Teclado Mecánico RGB"
+    description: "Teclado con switches mecánicos rojos y retroiluminación RGB programable."
+    category: "Periféricos"
+    price: 129.99
+    stock: 20
+    available: true
+
+  - id: 6
+    name: "Silla Gamer"
+    description: "Silla ergonómica con soporte lumbar, reposabrazos ajustables y material transpirable."
+    category: "Muebles"
+    price: 299.99
+    stock: 5
+    available: true
+
+  - id: 7
+    name: "Mochila Antirrobo"
+    description: "Mochila impermeable con compartimentos ocultos y puerto de carga USB."
+    category: "Accesorios"
+    price: 59.99
+    stock: 30
+    available: true
+
+  - id: 8
+    name: "Reloj Inteligente"
+    description: "Smartwatch con monitoreo de ritmo cardíaco, GPS y resistencia al agua."
+    category: "Wearables"
+    price: 179.99
+    stock: 12
+    available: true
+
+  - id: 9
+    name: "Cámara de Seguridad WiFi"
+    description: "Cámara de vigilancia con detección de movimiento y visión nocturna."
+    category: "Seguridad"
+    price: 89.99
+    stock: 18
+    available: true
+
+  - id: 10
+    name: "Router WiFi 6"
+    description: "Router de última generación con WiFi 6 y 4 antenas de alto rendimiento."
+    category: "Redes"
+    price: 149.99
+    stock: 10
+    available: true
+
+  - id: 11
+    name: "Aspiradora Robot"
+    description: "Aspiradora inteligente con mapeo láser y compatibilidad con Alexa."
+    category: "Hogar"
+    price: 349.99
+    stock: 7
+    available: true
+
+  - id: 12
+    name: "Microondas Inteligente"
+    description: "Microondas con control por voz y múltiples programas de cocción."
+    category: "Electrodomésticos"
+    price: 199.99
+    stock: 9
+    available: true
+
+  - id: 13
+    name: "Lámpara LED RGB"
+    description: "Lámpara inteligente con control de color y sincronización con música."
+    category: "Iluminación"
+    price: 39.99
+    stock: 40
+    available: true
+
+  - id: 14
+    name: "Set de Destornilladores"
+    description: "Juego de 24 piezas de destornilladores magnéticos para reparación de dispositivos electrónicos."
+    category: "Herramientas"
+    price: 24.99
+    stock: 50
+    available: true
+
+  - id: 15
+    name: "Cargador Rápido USB-C"
+    description: "Cargador de 65W compatible con laptops y teléfonos con USB-C."
+    category: "Accesorios"
+    price: 29.99
+    stock: 22
+    available: true
+
+  - id: 16
+    name: "Gafas de Realidad Virtual"
+    description: "Casco de realidad virtual con 6DOF y soporte para juegos VR."
+    category: "Gaming"
+    price: 399.99
+    stock: 6
+    available: true
+
+  - id: 17
+    name: "Batería Externa 20000mAh"
+    description: "Power bank de carga rápida con puertos USB-C y QC 3.0."
+    category: "Energía"
+    price: 49.99
+    stock: 35
+    available: true
+
+  - id: 18
+    name: "Cámara Deportiva 4K"
+    description: "Cámara de acción con estabilización óptica y grabación en 4K."
+    category: "Fotografía"
+    price: 159.99
+    stock: 14
+    available: true
+
+  - id: 19
+    name: "Estación Meteorológica Inteligente"
+    description: "Dispositivo para medir temperatura, humedad y calidad del aire en tiempo real."
+    category: "Climatización"
+    price: 79.99
+    stock: 11
+    available: true
+
+  - id: 20
+    name: "Panel Solar Portátil"
+    description: "Panel solar de 100W con puerto USB y salida de 12V para camping y emergencias."
+    category: "Energía"
+    price: 199.99
+    stock: 8
+    available: true
