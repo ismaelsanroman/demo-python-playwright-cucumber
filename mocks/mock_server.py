@@ -251,5 +251,65 @@ def delete_item(item_id):
     return jsonify({"success": True, "message": "Item deleted"}), 200
 
 
+@app.route("/items/<int:item_id>", methods=["PUT"])
+@token_required
+def put_item(item_id):
+    """Actualiza un item existente en la lista.
+
+    ---
+    tags:
+      - Items
+    parameters:
+      - name: item_id
+        in: path
+        type: integer
+        required: true
+        description: ID del item a actualizar
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            category:
+              type: string
+            price:
+              type: number
+            stock:
+              type: integer
+            available:
+              type: boolean
+    responses:
+      200:
+        description: Item actualizado correctamente.
+      400:
+        description: Datos inválidos.
+      404:
+        description: Item no encontrado.
+    """
+    global mock_data
+    item = next((i for i in mock_data if i["id"] == item_id), None)
+
+    if not item:
+        return jsonify({"success": False, "message": "Item not found"}), 404
+
+    update_data = request.json
+    if not update_data:
+        return jsonify({"success": False, "message": "Invalid data"}), 400
+
+    # Actualiza solo los campos que se envíen en la petición
+    item.update(update_data)
+
+    save_mock_data(mock_data)
+    return (
+        jsonify({"success": True, "message": f"Item {item_id} updated", "data": item}),
+        200,
+    )
+
+
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
