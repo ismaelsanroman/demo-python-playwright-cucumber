@@ -29,4 +29,6 @@ def verify_table_contains_rows(context):
     # Verificar que cada fila esperada exista en los datos reales
     missing_rows = [row for row in expected_rows if row not in actual_rows]
 
-    assert not missing_rows, f"❌ These rows were not found in the table: {missing_rows}" # noqa
+    assert (
+        not missing_rows
+    ), f"❌ These rows were not found in the table: {missing_rows}"  # noqa
