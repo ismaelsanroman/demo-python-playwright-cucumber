@@ -1,6 +1,9 @@
 # mocks/mock_server.py
 """Módulo define un servidor mock usando Flask con Swagger y persistencia en YAML."""
 
+import secrets
+from functools import wraps
+
 import yaml
 from flasgger import Swagger
 from flask import Flask, jsonify, request
@@ -9,13 +12,41 @@ app = Flask(__name__)
 
 # Configuración básica de Swagger
 app.config["SWAGGER"] = {
-    "title": "Mock API - Documentación",
+    "title": "Mock TESTING API - Documentación",
     "description": "API para gestionar items simulados con persistencia en YAML.",
-    "version": "1.0.0",
+    "version": "1.0.1",
 }
 swagger = Swagger(app)
 
 MOCK_FILE = "resources/mock_data.yaml"
+
+# Generamos un token de ejemplo en el arranque
+TOKEN = secrets.token_hex(16)
+
+
+# Decorador para requerir token
+def token_required(f):
+    """Decorador que requiere la cabecera 'Authorization: Bearer <TOKEN>'."""
+
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth_header = request.headers.get("Authorization", "")
+        if not auth_header.startswith("Bearer "):
+            return (
+                jsonify(
+                    {
+                        "success": False,
+                        "message": "Falta cabecera de autorización o es inválida",
+                    }
+                ),
+                401,
+            )
+        provided_token = auth_header.split("Bearer ")[-1]
+        if provided_token != TOKEN:
+            return jsonify({"success": False, "message": "Token inválido"}), 401
+        return f(*args, **kwargs)
+
+    return decorated
 
 
 def load_mock_data():
@@ -27,9 +58,8 @@ def load_mock_data():
     try:
         with open(MOCK_FILE, "r", encoding="utf-8") as file:
             data = yaml.safe_load(file)
-            return data.get("items", [])  # Retorna la lista de items
+            return data.get("items", [])
     except (FileNotFoundError, yaml.YAMLError):
-        # Si el archivo no existe o está corrupto, devuelve una lista vacía
         return []
 
 
@@ -37,24 +67,57 @@ def save_mock_data(data):
     """Guarda los datos en el archivo YAML.
 
     Args:
-        data (list): Lista de items a guardar en el archivo YAML.
+        data (list): Lista de items.
     """
     with open(MOCK_FILE, "w", encoding="utf-8") as file:
         yaml.dump({"items": data}, file, default_flow_style=False, allow_unicode=True)
 
 
-# Cargamos los datos en memoria al iniciar
 mock_data = load_mock_data()
 
 
+@app.route("/login", methods=["POST"])
+def login():
+    """Autenticación sencilla para devolver un token de sesión.
+
+    ---
+    tags:
+      - Auth
+    parameters:
+      - name: credentials
+        in: body
+        required: false
+        schema:
+          type: object
+          properties:
+            username:
+              type: string
+            password:
+              type: string
+    responses:
+      200:
+        description: Devuelve un token en caso de éxito.
+        schema:
+          type: object
+          properties:
+            success:
+              type: boolean
+            token:
+              type: string
+    """
+    # (Podrías validar username/password en un entorno real)
+    return jsonify({"success": True, "token": TOKEN}), 200
+
+
 @app.route("/items", methods=["GET"])
+@token_required
 def get_items():
-    """Devuelve la lista completa de items almacenados en el servidor.
+    """Devuelve la lista completa de items.
 
-    Returns:
-        dict: Respuesta con la lista de items.
-
-    Swagger responses:
+    ---
+    tags:
+      - Items
+    responses:
       200:
         description: Lista de items obtenida correctamente.
         schema:
@@ -71,27 +134,31 @@ def get_items():
 
 
 @app.route("/items/<int:item_id>", methods=["GET"])
+@token_required
 def get_item(item_id):
     """Obtiene un item específico por su ID.
 
-    Args:
-        item_id (int): ID del item a buscar.
-
-    Returns:
-        dict: Respuesta con el item encontrado o mensaje de error.
-
-    Swagger parameters:
+    ---
+    tags:
+      - Items
+    parameters:
       - name: item_id
         in: path
         type: integer
         required: true
-        description: ID del item a buscar.
-
-    Swagger responses:
+        description: ID del item a buscar
+    responses:
       200:
-        description: Item encontrado.
+        description: Item encontrado
+        schema:
+          type: object
+          properties:
+            success:
+              type: boolean
+            data:
+              type: object
       404:
-        description: Item no encontrado.
+        description: Item no encontrado
     """
     item = next((i for i in mock_data if i["id"] == item_id), None)
     if item:
@@ -100,13 +167,14 @@ def get_item(item_id):
 
 
 @app.route("/items", methods=["POST"])
+@token_required
 def create_item():
     """Crea un nuevo item y lo agrega a la lista simulada.
 
-    Returns:
-        dict: Respuesta con el item creado o mensaje de error.
-
-    Swagger parameters:
+    ---
+    tags:
+      - Items
+    parameters:
       - name: body
         in: body
         required: true
@@ -127,20 +195,24 @@ def create_item():
               type: integer
             available:
               type: boolean
-
-    Swagger responses:
+    responses:
       201:
-        description: Item creado exitosamente.
+        description: Item creado exitosamente
+        schema:
+          type: object
+          properties:
+            success:
+              type: boolean
+            data:
+              type: object
       400:
-        description: Datos inválidos.
+        description: Datos inválidos
       409:
-        description: ID duplicado.
+        description: ID duplicado
     """
     new_item = request.json
-
     if not new_item or "id" not in new_item or "name" not in new_item:
         return jsonify({"success": False, "message": "Invalid data"}), 400
-
     if any(i["id"] == new_item["id"] for i in mock_data):
         return jsonify({"success": False, "message": "Item ID already exists"}), 409
 
@@ -150,30 +222,27 @@ def create_item():
 
 
 @app.route("/items/<int:item_id>", methods=["DELETE"])
+@token_required
 def delete_item(item_id):
     """Elimina un item de la lista basado en su ID.
 
-    Args:
-        item_id (int): ID del item a eliminar.
-
-    Returns:
-        dict: Mensaje de éxito o error.
-
-    Swagger parameters:
+    ---
+    tags:
+      - Items
+    parameters:
       - name: item_id
         in: path
         type: integer
         required: true
-
-    Swagger responses:
+        description: ID del item a eliminar
+    responses:
       200:
-        description: Item eliminado correctamente.
+        description: Item eliminado correctamente
       404:
-        description: Item no encontrado.
+        description: Item no encontrado
     """
     global mock_data
     item = next((i for i in mock_data if i["id"] == item_id), None)
-
     if not item:
         return jsonify({"success": False, "message": "Item not found"}), 404
 
