@@ -14,7 +14,7 @@ def step_select_checkbox_for(context, checkbox_name):
     context.loop.run_until_complete(page.click_checkbox(checkbox_name))
 
 
-@step("I verify that labels are {state}")
+@step('I verify that labels are {state}')
 def step_labels_selected(context, state: str):
     """Verifica que las etiquetas en la tabla Gherkin están seleccionadas o no."""
     page = CheckBoxPage(context.page)

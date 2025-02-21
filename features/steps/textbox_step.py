@@ -6,7 +6,7 @@ from behave import step
 from features.pages.textbox_page import TextBoxPage
 
 
-@step("I fill in the form with the following data")
+@step('I fill in the form with the following data')
 def fill_in_and_send_form(context):
     """Completa y envía el formulario con la información proporcionada en la tabla.
 
@@ -28,7 +28,7 @@ def fill_in_and_send_form(context):
     context.loop.run_until_complete(page.submit_form())
 
 
-@step("I verify the form with the following data")
+@step('I verify the form with the following data')
 def verify_submitted_form(context):
     """Verifica que el formulario enviado muestre los datos indicados en la tabla.
 
@@ -49,7 +49,7 @@ def verify_submitted_form(context):
     )
 
 
-@step("I verify the form fails")
+@step('I verify the form fails')
 def verify_submitted_form_fail(context):
     """Verifica que el formulario muestre un error por email inválido.
 
