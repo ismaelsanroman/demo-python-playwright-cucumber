@@ -64,7 +64,7 @@ def before_all(context):
     context.playwright = context.loop.run_until_complete(async_playwright().start())
     context.browser = context.loop.run_until_complete(
         context.playwright.chromium.launch(
-            headless=False,
+            headless=True,
             args=["--start-maximized"],
             slow_mo=500,
         )
