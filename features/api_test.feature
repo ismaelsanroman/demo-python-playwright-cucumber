@@ -46,4 +46,3 @@ Feature: Testing on a mocked-up API
   Scenario: Request items without a valid token and verify unauthorized access
     When I launch the request to obtain all items without a token
     Then I verify that the response returns an error for a missing or invalid token
-
