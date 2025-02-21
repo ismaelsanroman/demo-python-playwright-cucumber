@@ -1,12 +1,5 @@
 # mocks/mock_server.py
-"""Módulo que define un servidor mock usando Flask con Swagger y persistencia en YAML.
-
-En este mock se exige que todos los campos (id, name, description, category, price,
-stock, available)
-vengan informados (no vacíos) para que el endpoint /items devuelva 201. En caso de
-que falte alguno,
-o esté vacío, se devuelve un 400 (Bad Request). Si el id ya existe, devuelve 409.
-"""
+"""Módulo define un servidor mock usando Flask con Swagger y persistencia en YAML."""
 
 import secrets
 from functools import wraps
@@ -43,7 +36,7 @@ def token_required(f):
                 jsonify(
                     {
                         "success": False,
-                        "message": "Token faltante o inválido",
+                        "message": "Falta cabecera de autorización o es inválida",
                     }
                 ),
                 401,
@@ -218,32 +211,11 @@ def create_item():
         description: ID duplicado
     """
     new_item = request.json
-
-    # Cambios: validamos que vengan todos los campos y que no estén vacíos.
-    required_fields = [
-        "id",
-        "name",
-        "description",
-        "category",
-        "price",
-        "stock",
-        "available",
-    ]
-    for field in required_fields:
-        # Verifica presencia y no-vacío
-        if field not in new_item or not str(new_item[field]).strip():
-            return (
-                jsonify(
-                    {"success": False, "message": f"Missing or invalid field '{field}'"}
-                ),
-                400,
-            )
-
-    # Verificar si el ID ya existe en la lista
+    if not new_item or "id" not in new_item or "name" not in new_item:
+        return jsonify({"success": False, "message": "Invalid data"}), 400
     if any(i["id"] == new_item["id"] for i in mock_data):
         return jsonify({"success": False, "message": "Item ID already exists"}), 409
 
-    # Si llega aquí, se asume que todos los campos son válidos
     mock_data.append(new_item)
     save_mock_data(mock_data)
     return jsonify({"success": True, "data": new_item}), 201
