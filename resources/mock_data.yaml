@@ -143,14 +143,3 @@ items:
   name: Panel Solar Portátil
   price: 199.99
   stock: 8
-- available: true
-  category: Default
-  description: Default description
-  id: 21
-  name: Item 21
-  price: 10.0
-  stock: 5
-- category: ''
-  description: ''
-  id: 22
-  name: ''
