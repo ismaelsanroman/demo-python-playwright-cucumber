@@ -1,5 +1,6 @@
 # features/pages/api_test_page.py
-"""Módulo que define las funciones para la funcionalidad del Test de APIs."""
+"""Módulo que define los steps para la funcionalidad de API_TEST en BDD."""
+
 import os
 
 import requests
@@ -9,15 +10,22 @@ from utils.error_dictionary import ErrorDictionary
 from utils.logger import Logger
 
 errors = ErrorDictionary()
-
 load_dotenv()
 
 
 class ApiTest:
-    """Clase para pruebas de la API."""
+    """Clase para pruebas de la API.
+
+    Esta clase implementa funciones para realizar pruebas de endpoints de la API,
+    incluyendo login, obtención de items, creación, verificación y eliminación.
+    """
 
     def __init__(self, context=None):
-        """Inicializa la configuración de la API."""
+        """Inicializa la configuración de la API.
+
+        Args:
+            context: Contexto de ejecución que puede contener token e items.
+        """
         self.context = context
         self.API_URL = os.getenv("API_URL")
         self.TOKEN = context.token if context and hasattr(context, "token") else None
@@ -29,121 +37,47 @@ class ApiTest:
         self.logger = Logger().get_logger()
 
     async def test_login(self):
-        """Prueba el endpoint de autenticación y obtiene el token."""
-        response = requests.post(f"{self.API_URL}/login", json={})
+        """Realiza la petición POST al endpoint /login para obtener el token.
 
+        Registra el token obtenido con el icono 🔑.
+        """
+        response = requests.post(f"{self.API_URL}/login", json={})
         assert response.status_code == 200
         json_data = response.json()
-
         assert json_data["success"] is True
         assert "token" in json_data
-
         self.TOKEN = json_data["token"]
         self.logger.info(f"🔑 Token obtenido: {self.TOKEN}")
 
     async def test_get_items(self):
-        """Prueba el endpoint GET /items."""
+        """Realiza la petición GET al endpoint /items para obtener la lista de items.
+
+        Registra la acción y muestra los primeros 3 items con el icono 📄.
+        """
         headers = {"Authorization": f"Bearer {self.TOKEN}"}
         response = requests.get(f"{self.API_URL}/items", headers=headers)
-
         assert response.status_code == 200
         json_data = response.json()
-
         assert json_data["success"] is True
         assert isinstance(json_data["data"], list)
-
         self.items_request = json_data["data"]
-
-        self.logger.info(f"📄 Se han obtenido todos los Items")
-        self.logger.info(f"📄 Items: {json_data["data"][:3]}...")
-
-    async def test_get_one_item(self, num):
-        """Prueba el endpoint GET /items."""
-        headers = {"Authorization": f"Bearer {self.TOKEN}"}
-        response = requests.get(f"{self.API_URL}/items/{num}", headers=headers)
-
-        assert response.status_code == 200
-        json_data = response.json()
-
-        assert json_data["success"] is True
-        assert isinstance(json_data["data"], list)
-
-    async def test_create_item(self, num: int):
-        """Prueba la creación de un nuevo item con POST."""
-        headers = {
-            "Authorization": f"Bearer {self.TOKEN}",
-            "Content-Type": "application/json",
-        }
-
-        new_item = {
-            "id": num,
-            "name": "Item de Prueba",
-            "description": "Este es un item de prueba",
-            "category": "Test",
-            "price": 99.99,
-            "stock": 10,
-            "available": True,
-        }
-
-        response = requests.post(
-            f"{self.API_URL}/items", json=new_item, headers=headers
-        )
-
-        assert response.status_code == 201
-        json_data = response.json()
-
-        assert json_data["success"] is True
-        assert json_data["data"]["name"] == "Item de Prueba"
-
-    async def test_update_item(self, num: int):
-        """Prueba la actualización de un item con PUT."""
-        headers = {
-            "Authorization": f"Bearer {self.TOKEN}",
-            "Content-Type": "application/json",
-        }
-
-        update_data = {"name": "Item Actualizado", "price": 120.50}
-
-        response = requests.put(
-            f"{self.API_URL}/items/{num}", json=update_data, headers=headers
-        )
-
-        assert response.status_code == 200
-        json_data = response.json()
-
-        assert json_data["success"] is True
-        assert json_data["data"]["name"] == "Item Actualizado"
-        assert json_data["data"]["price"] == 120.50
-
-    async def test_delete_item(self, num: int):
-        """Prueba la eliminación de un item con DELETE."""
-        headers = {"Authorization": f"Bearer {self.TOKEN}"}
-        response = requests.delete(f"{self.API_URL}/items/{num}", headers=headers)
-
-        assert response.status_code == 200
-        json_data = response.json()
-
-        assert json_data["success"] is True
-        assert json_data["message"] == "Item deleted"
+        self.logger.info("📄 Se han obtenido todos los Items")
+        self.logger.info(f"📄 Items: {json_data['data'][:3]}...")
 
     async def verify_items_request(self, data_table):
-        """
-        Verifica que en la lista de items (self.items_request) exista al menos un item
-        que cumpla con los criterios especificados.
+        """Verifica que la lista de items cumpla con los criterios especificados.
 
         - Para 'description': se verifica que contenga el texto indicado.
-        - Para 'price' y 'stock': se permite usar condiciones del tipo '>100' o '<50' para comparaciones numéricas.
+        - Para 'price' y 'stock': se permite usar operadores como '>100' o '<50'.
         - Para 'available': se realiza comparación insensible a mayúsculas.
-        - Para el resto de campos se exige coincidencia exacta.
+        - Para los demás campos: se exige coincidencia exacta.
 
-        data_table: lista de diccionarios con los criterios a buscar.
-                    Los campos con valor vacío se ignoran.
+        Se registran los resultados con iconos para facilitar el debug.
         """
         if self.items_request is None:
             raise ValueError(
-                "No se han obtenido los items. Ejecuta test_get_items antes de la verificación."
+                "No se han obtenido los items. Ejecute test_get_items primero."
             )
-
         for criteria in data_table:
             matching_items = []
             for item in self.items_request:
@@ -155,12 +89,10 @@ class ApiTest:
                         if item_value is None:
                             match = False
                             break
-
                         if key == "description":
                             if value not in str(item_value):
                                 match = False
                                 break
-
                         elif key in ["price", "stock"]:
                             if value.startswith(">") or value.startswith("<"):
                                 operator = value[0]
@@ -184,38 +116,105 @@ class ApiTest:
                                 except ValueError:
                                     match = False
                                     break
-
                         elif key == "available":
                             if str(item_value).lower() != value.lower():
                                 match = False
                                 break
-
                         else:
                             if str(item_value) != value:
                                 match = False
                                 break
                 if match:
                     matching_items.append(item)
-
             assert (
                 matching_items
-            ), f"No se encontró ningún item que cumpla con los criterios: {criteria}"
-            self.logger.info(
-                f"Para criterios 📥 {criteria} se encontraron los siguientes items: 📤 {matching_items}"
-            )
-
+            ), f"❌ No se encontró ningún item con los criterios: {criteria}"
+            self.logger.info(f"📥 Criterios {criteria} -> Items: {matching_items}")
         self.logger.info(
-            "✅Todos los criterios se han verificado en los items obtenidos."
+            "✅ Todos los criterios se han verificado en los items obtenidos."
         )
 
+    async def test_create_item_from_params(self, params: dict):
+        """Envía una petición POST para crear un item con los parámetros dados.
 
-"""
-if scenario.status == "failed" or context.errors.has_errors():
-        print(f"⚠️ El escenario '{scenario.name}' falló o acumuló errores.")
-        context.loop.run_until_complete(take_screenshot(context.page, scenario.name))
-    context.loop.run_until_complete(stop_tracing(context.browser_context))
-    if context.errors.has_errors():
-        for error in context.errors.get_all_errors():
-            print(error)
-        context.errors.clear_errors()
-"""
+        Convierte los tipos (id, price, stock y available) y verifica que la respuesta
+        sea correcta. Registra el proceso con iconos 🚀 y ✅.
+        """
+        headers = {
+            "Authorization": f"Bearer {self.TOKEN}",
+            "Content-Type": "application/json",
+        }
+        try:
+            params["id"] = int(params["id"])
+            params["price"] = float(params["price"])
+            params["stock"] = int(params["stock"])
+            if isinstance(params["available"], str):
+                params["available"] = params["available"].lower() == "true"
+        except Exception as e:
+            self.logger.error(f"❌ Error al convertir parámetros: {e}")
+            raise
+
+        self.logger.info(f"🚀 Creando item con parámetros: {params}")
+        response = requests.post(f"{self.API_URL}/items", json=params, headers=headers)
+        assert response.status_code == 201, f"Expected 201, got {response.status_code}"
+        json_data = response.json()
+        assert json_data["success"] is True, f"❌ Fallo en la creación: {json_data}"
+        assert (
+            json_data["data"]["name"] == params["name"]
+        ), "❌ El nombre del item creado no coincide"
+        self.logger.info(f"✅ Item creado: {json_data['data']}")
+
+    async def verify_created_item(self, item_id):
+        """Verifica que el item creado con el ID indicado existe.
+
+        Realiza una petición GET a /items/{id} y registra la respuesta con iconos 🚀 y ✅.
+        """
+        headers = {"Authorization": f"Bearer {self.TOKEN}"}
+        self.logger.info(f"🚀 Verificando item con ID: {item_id}")
+        response = requests.get(f"{self.API_URL}/items/{item_id}", headers=headers)
+        assert response.status_code == 200, (
+            f"❌ Error al obtener el item creado: status code " f"{response.status_code}"
+        )
+        json_data = response.json()
+        assert json_data["success"] is True, f"❌ Error al obtener el item: {json_data}"
+        self.logger.info(f"✅ Item verificado: {json_data['data']}")
+
+    async def test_delete_item(self, item_id: int):
+        """Envía una petición DELETE para eliminar el item con el ID especificado.
+
+        Registra el proceso con iconos 🚀 y ✅.
+        """
+        headers = {"Authorization": f"Bearer {self.TOKEN}"}
+        self.logger.info(f"🚀 Enviando DELETE para el item con ID: {item_id}")
+        response = requests.delete(f"{self.API_URL}/items/{item_id}", headers=headers)
+        assert (
+            response.status_code == 200
+        ), f"❌ Error al borrar el item: status code {response.status_code}"
+        json_data = response.json()
+        assert json_data["success"] is True, f"❌ Fallo en la eliminación: {json_data}"
+        assert (
+            json_data["message"] == "Item deleted"
+        ), "❌ Mensaje de eliminación inesperado"
+        self.logger.info(f"✅ Item con ID {item_id} eliminado correctamente.")
+
+    async def delete_created_items(self, item_ids):
+        """Envía peticiones DELETE para cada item en la lista de IDs.
+
+        Este método soporta borrar uno o varios elementos, registrando cada borrado.
+        """
+        for item_id in item_ids:
+            await self.test_delete_item(item_id)
+
+    async def verify_deleted_item(self, item_id):
+        """Verifica que el item con el ID indicado ha sido eliminado.
+
+        Se espera que la petición GET a /items/{id} retorne un status 404.
+        Registra el proceso con iconos 🚀 y ✅.
+        """
+        headers = {"Authorization": f"Bearer {self.TOKEN}"}
+        self.logger.info(f"🚀 Confirmando eliminación del item con ID: {item_id}")
+        response = requests.get(f"{self.API_URL}/items/{item_id}", headers=headers)
+        assert (
+            response.status_code == 404
+        ), f"❌ El item aún existe: status code {response.status_code}"
+        self.logger.info(f"✅ Item con ID {item_id} confirmado eliminado.")
