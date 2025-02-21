@@ -241,7 +241,7 @@ def create_item():
     # Verificar si el ID ya existe en la lista
     if any(i["id"] == new_item["id"] for i in mock_data):
         return jsonify({"success": False, "message": "Item ID already exists"}), 409
-    
+
     # Si llega aquí, se asume que todos los campos son válidos
     mock_data.append(new_item)
     save_mock_data(mock_data)
