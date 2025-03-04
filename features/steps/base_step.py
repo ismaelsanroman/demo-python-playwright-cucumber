@@ -6,7 +6,7 @@ from pages.base_page import BasePage
 
 
 @step('I navigate to DemoQA and "{element}" Page')
-def step_navigate_to_elements(context, element: str):
+def step_navigate_to_elements_step(context, element: str):
     """Navega a la página base de DemoQA y hace clic en el elemento especificado.
 
     Args:
@@ -23,7 +23,7 @@ def step_navigate_to_elements(context, element: str):
 
 
 @step('I open the "{section}" section')
-def step_open_text_box(context, section: str):
+def step_open_text_box_step(context, section: str):
     """Abre la sección específica dentro de la página de elementos.
 
     Args:
@@ -35,7 +35,7 @@ def step_open_text_box(context, section: str):
 
 
 @step('I refresh the page')
-def refresh_page(context):
+def refresh_page_step(context):
     """Refresca la página."""
     base_page = BasePage(context.page)
     context.loop.run_until_complete(base_page.refresh_page())

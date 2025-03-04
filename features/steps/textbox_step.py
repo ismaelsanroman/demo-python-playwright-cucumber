@@ -7,7 +7,7 @@ from features.pages.textbox_page import TextBoxPage
 
 
 @step('I fill in the form with the following data')
-def fill_in_and_send_form(context):
+def fill_in_and_send_form_step(context):
     """Completa y envía el formulario con la información proporcionada en la tabla.
 
     Args:
@@ -29,7 +29,7 @@ def fill_in_and_send_form(context):
 
 
 @step('I verify the form with the following data')
-def verify_submitted_form(context):
+def verify_submitted_form_step(context):
     """Verifica que el formulario enviado muestre los datos indicados en la tabla.
 
     Args:
@@ -50,7 +50,7 @@ def verify_submitted_form(context):
 
 
 @step('I verify the form fails')
-def verify_submitted_form_fail(context):
+def verify_submitted_form_fail_step(context):
     """Verifica que el formulario muestre un error por email inválido.
 
     Args:

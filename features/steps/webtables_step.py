@@ -6,7 +6,7 @@ from behave import step
 from features.pages.webtables_page import WebTables
 
 
-@step("I verify the table contains the following rows")
+@step('I verify the table contains the following rows')
 def verify_table_contains_rows(context):
     """Verifica que la tabla contenga los datos esperados."""
     page = WebTables(context.page)
@@ -32,3 +32,28 @@ def verify_table_contains_rows(context):
     assert (
         not missing_rows
     ), f"❌ These rows were not found in the table: {missing_rows}"  # noqa
+
+
+@step('I create a new entry with the following data')
+def create_new_entry_step(context):
+    """Añade una nueva entrada en la tabla con los datos proporcionados."""
+    page = WebTables(context.page)
+
+    for row in context.table:
+        context.loop.run_until_complete(
+            page.click_add_entry(
+                row["First Name"],
+                row["Last Name"],
+                row["Email"],
+                row["Age"],
+                row["Salary"],
+                row["Department"],
+            )
+        )
+
+
+@step('I check that the form alerts me of unfilled fields')
+def verify_error_message_step(context):
+    """Verifica el mensaje de error en el formulario con datos inválidos."""
+    page = WebTables(context.page)
+    context.loop.run_until_complete(page.form_class_validated())
