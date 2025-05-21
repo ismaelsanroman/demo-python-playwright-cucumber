@@ -19,7 +19,39 @@ Se enfoca en la interacción con la página [DemoQA](https://demoqa.com/) y perm
 
 ## 📂 Estructura del proyecto
 
-📦 demo-python-playwright-cucumber ├── 📂 configs # Archivos de configuración │ └── config.yaml # Configuración personalizada ├── 📂 driver # Clases base para gestionar Playwright │ └── playwright_base.py ├── 📂 features # Pruebas BDD en Gherkin │ ├── 📂 pages # Page Object Model (POM) │ │ ├── base_page.py │ │ ├── elements_page.py │ │ └── textbox_page.py │ ├── 📂 steps # Implementación de los steps en Python │ │ ├── environment.py # Configuración global de Behave │ │ ├── textbox_steps.py │ ├── textbox.feature # Escenarios de prueba en Gherkin ├── 📂 mocks # Servidor Flask para pruebas API │ └── mock_server.py ├── 📂 reports # Reportes de ejecución y capturas │ ├── junit-results/ │ ├── screenshots/ │ ├── traces/ ├── 📂 resources # Datos de prueba en YAML │ ├── testdata.yaml │ ├── users.yaml ├── 📂 scripts # Scripts auxiliares │ └── run_tests.sh # Script para ejecutar pruebas ├── 📂 utils # Utilidades (logs, manejo de errores) │ ├── error_dictionary.py │ ├── logger.py ├── .env # Variables de entorno ├── .flake8 # Configuración de Flake8 ├── .gitignore # Archivos ignorados en Git ├── .pre-commit-config.yaml # Configuración de pre-commit ├── behave.ini # Configuración de Behave ├── LICENSE # Licencia del proyecto ├── pyproject.toml # Configuración de formateo de código ├── README.md # 📖 Documentación del proyecto └── requirements.txt # 📦 Dependencias del proyecto
+📦 demo-python-playwright-cucumber 
+├── 📂 configs # Archivos de configuración 
+│ └── config.yaml # Configuración personalizada 
+├── 📂 driver # Clases base para gestionar Playwright 
+│ └── playwright_base.py 
+├── 📂 features # Pruebas BDD en Gherkin 
+│ ├── 📂 pages # Page Object Model (POM) 
+│ │ ├── base_page.py │ │ ├── elements_page.py 
+│ │ └── textbox_page.py │ ├── 📂 steps # Implementación de los steps en Python 
+│ │ ├── environment.py # Configuración global de Behave 
+│ │ ├── textbox_steps.py 
+│ ├── textbox.feature # Escenarios de prueba en Gherkin 
+├── 📂 mocks # Servidor Flask para pruebas API 
+│ └── mock_server.py ├── 📂 reports # Reportes de ejecución y capturas 
+│ ├── junit-results/ 
+│ ├── screenshots/ 
+│ ├── traces/ 
+├── 📂 resources # Datos de prueba en YAML 
+│ ├── testdata.yaml 
+│ ├── users.yaml ├── 📂 scripts # Scripts auxiliares 
+│ └── run_tests.sh # Script para ejecutar pruebas 
+├── 📂 utils # Utilidades (logs, manejo de errores) 
+│ ├── error_dictionary.py 
+│ ├── logger.py 
+├── .env # Variables de entorno 
+├── .flake8 # Configuración de Flake8 
+├── .gitignore # Archivos ignorados en Git 
+├── .pre-commit-config.yaml # Configuración de pre-commit 
+├── behave.ini # Configuración de Behave 
+├── LICENSE # Licencia del proyecto 
+├── pyproject.toml # Configuración de formateo de código 
+├── README.md # 📖 Documentación del proyecto 
+└── requirements.txt # 📦 Dependencias del proyecto
 
 yaml
 Copiar
